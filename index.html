@@ -1,0 +1,431 @@
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+
+<head>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+
+<nav id="navbar">
+  <header>
+    POSTed Documentation 
+  </header>
+  
+  <hr>
+  
+  <a href="#Introduction" class="nav-link">Introduction</a>
+  
+  <hr>
+  
+  <a href="#What_You_Need" class="nav-link">What You Need</a>
+  
+  
+  <hr>
+  
+  <a href="#Setting_Up_Your_Coding_Environment" class="nav-link">Setting Up Your Coding Environment</a>
+  
+  
+  <hr>
+  
+  <a href="#Creating_A_GameMod" class="nav-link">Creating A GameMod</a>
+  
+  
+  <hr>
+  
+  <a href="#Example_Mod:_Creating_the_Package" class="nav-link">Example Mod: Creating the Package</a>
+  
+  
+  <hr>
+  
+  <a href="#Having_the_Mod_Do_Something" class="nav-link">Having the Mod Do Something</a>
+  
+  
+  <hr>
+  
+  <a href="#Compiling_the_Mod" class="nav-link">Compiling the Mod</a>
+  
+  
+  <hr>
+  
+  <a href="#Testing_the_Mod" class="nav-link">Testing the Mod</a>
+  
+  
+  <hr>
+  
+  <a href="#Credits" class="nav-link">Credits</a>
+</nav>
+
+<main id="main-doc">
+
+  <section id="Introduction" class="main-section">
+    <header>
+      Introduction  
+    </header>
+    <p>
+      The game Postal 2 is a cult classic among pc gamers. It is well known for its irreverent and raunchy humor involving pop culture and some aspects of the gaming industry. The gameplay of Postal 2 encourages players to approach goals and tasks in whatever way they see fit.
+
+      This free range of player expression is also extended to the modding of the game which is fairly open ended. 
+    </p>
+  </section>
+  
+  <section id="What_You_Need" class="main-section">
+    <header>
+      What You Need  
+    </header>
+    <li>A Copy of Postal 2</li>
+    <li>A Text Editor</li>
+    <li>A Windows Machine</li>
+    <li>UnrealScript Source Code</li>
+    <li>Patience</li>
+  </section>
+
+  <section id="Setting_Up_Your_Coding_Environment" class="main-section">
+    <header>
+      Setting Up Your Coding Environment  
+    </header>
+    <p>
+      Download the POSTed Development Kit from your Steam Library under the 'Tools' tab.
+      
+      Once downloaded, right-click on it then go to 'Manage' then 'browse local file'.
+
+      Inside, extract 'Postal 2 UnrealScript Source' under the 'Postal2Editor' directory. This will give you all of the files you need to modify the game.
+
+      Finally, create a shortcut for the command prompt in the 'System' directory. Next, right click on the shortcut and click on 'Properties' and delete the value under the 'Start in' entry. This will make the command prompt start in this directory so that you can quickly access Postal2.exe and ucc.exe
+    </p>
+  </section>
+  
+  <section id="Creating_A_GameMod" class="main-section">
+    <header>
+      Creating A GameMod  
+    </header>
+    <p>
+      To create a mod that is not limited to a single map, you will be creating a script that extends P2GameMod.
+    </p>
+  </section>
+
+  <section id="Example_Mod:_Creating_the_Package" class="main-section">
+    <header>
+      Example Mod: Creating the Package 
+    </header>
+    <p>
+      In the POSTAL2editor folder create another folder named "DeadlyKick" and create another folder in that called "Classes". 
+
+      Next copy "SampleWorkshopMod.uc" from the "Classes" file under "WorkshopSample" and paste it into the "Classes" folder under the "DeadlyKick" folder then rename it from "SampleWorkshopMod.uc" to "DeadlyKick.uc". 
+
+      After that you'll open it in a text editor of your choice and then change: 
+            </p>
+      
+        
+      <code>
+      class SampleWorkshopMod extends P2GameMod;
+      </code>
+
+     <p>
+      to
+     </p>
+    
+      <code>
+      class DeadlyKick extends P2GameMod;
+      </code>
+    </p>
+  </section>
+
+  <section id="Having_the_Mod_Do_Something" class="main-section">
+    <header>
+      Having the Mod Do Something
+    </header>
+    
+    <p>
+      You are now going to have the script adjust the damage values and damage type of the kick weapon.
+
+      Find
+    </p>
+    <code>
+      function bool CheckReplacement(Actor Other, out byte bSuperRelevant)<br/>
+      {<br/>
+        return true;<br/>
+      }<br/>
+    </code>
+    <p>
+      And change it to
+    </p>
+      <code>
+      function bool CheckReplacement(Actor Other, out byte bSuperRelevant)<br/>
+        
+      {<br/>
+        if(FootAmmoInv(Other) != None)<br/>
+          FootAmmoInv(Other).DamageAmount=9999;<br/>
+        return true;<br/>
+      }<br/>
+      </code>
+    
+    <p>
+      Save your file once you have done this.
+    </p>
+    
+  </section>
+
+  <section id="Compiling_the_Mod" class="main-section">
+    
+    <header>
+      Compiling the Mod
+    </header>
+    
+    <p>
+      Under the "System" directory open Postal2.ini and find the section "[Editor.EditorEngine]" and then look for a list of "EditPackages=" lines:
+    </p>
+    <code>
+      EditPackages=AWShell <br>
+      EditPackages=Postal2Extras <br>
+      EditPackages=Postal2Holidays<br>
+      EditPackages=EDStuff<br>
+      EditPackages=P2R<br>
+      EditPackages=PostalArcade<br>
+    </code>
+
+    <p>
+      Add DeadlyKick to the end of the list:
+    </p>
+    
+    <code>
+      EditPackages=AWShell<br>
+      EditPackages=Postal2Extras<br>
+      EditPackages=Postal2Holidays<br>
+      EditPackages=EDStuff<br>
+      EditPackages=P2R<br>
+      EditPackages=PostalArcade<br>
+      EditPackages=DeadlyKick<br>
+     </code>
+     
+    <p>
+      Save Postal2.ini. Open the cmd.exe and enter the command:
+    </p>
+    
+    <code>
+      ucc make
+    </code>
+
+    <p>
+      A series of lines will appear but you should see this at the end:
+    </p>
+    
+    <code>
+      --------------------DeadlyKick - Release--------------------<br>
+      Analyzing...<br>
+      Parsing DeadlyKick<br>
+      Compiling DeadlyKick<br>
+      Success - 0 error(s), 0 warnings<br>
+    </code>
+
+    <p>
+      The end of this process should give you a file called "DeadlyKick.u".
+    </p>
+    
+  </section>
+
+  <section id="Testing_the_Mod" class="main-section">
+    <header>
+      Testing the Mod
+    </header>
+    
+    <p>
+      Let's test our mod from the command line. We don't currently have an INT file for it, so the game doesn't know it exists. However, using the power of the command line, we can force the game to use our mod right off the bat. We'll use the built-in TestMap for testing. Go to the command line and enter:
+    </p>
+    <code>
+postal2 testmap?Mutator=DeadlyKick.DeadlyKick
+    </code>
+    
+    <p>  
+(If you named your package or class name something else, use that name instead. For instance, if your package is AwesomeMod and your game mod class is KickassGameMod, you'd use Mutator=AwesomeMod.KickassGameMod)
+    </p>
+    
+    <p>
+You'll see the WARNING splash, then be dumped into the testing area. Go kick some pawns to see if your code worked. If you've followed along correctly so far, one kick should kill anything on that map!
+    </p>
+    
+    <p>
+Once you're done playing around, exit the game (quick shortcut: bring up the console with the tilde ` key, then enter "quit")
+    </p>
+    
+    <p>
+Next we're going to add some more functionality to our kick. To look at all the cool things we can do, let's have a look at the FootAmmoInv source code. Open up POSTAL2Editor\Inventory\Classes\FootAmmoInv.uc and scroll down to the bottom, the "default properties" section:
+    </p>
+    
+    <code>
+defaultproperties<br>
+{<br>
+	DamageAmount=3<br>
+	bInstantHit=true<br>
+	Texture=None<br>
+	DamageTypeInflicted=class'KickingDamage'<br>
+	MomentumHitMag=120000<br>
+	FootKickWall=Sound'WeaponSounds.Foot_KickWall'<br>
+	FootKickDoor=Sound'WeaponSounds.Foot_KickDoor'<br>
+	TransientSoundRadius=80<br>
+}
+    </code>
+      
+    <p>
+We've already tweaked the damage amount. bInstantHit needs to stay true, and foot ammo doesn't have a HUD texture icon. However, we can do some cool things with the next two lines. The MomentumHitMag is a number that determines how far a hit will knock the target actor. Let's double that number and see if it does anything. Go back to DeadlyKick.uc, and change your CheckReplacement function to look like this:
+    </p>
+      
+    <code>
+function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
+{<br>
+	if (FootAmmoInv(Other) != None)<br>
+	{<br>
+		FootAmmoInv(Other).DamageAmount=9999;<br>
+		FootAmmoInv(Other).MomentumHitMag=240000;<br>
+	}<br>
+	return true;<br>
+}<br>
+    </code>
+        
+    <p> 
+I've made two major changes here. First, I added curly braces before and after our property reassignments -- if you want more than one statement to execute as part of an if, it needs to be enclosed in a block. Second, we've doubled the MomentumHitMag of the foot. Save your changes, and go back to the command line.
+
+You may have tried to recompile DeadlyKick already, but there's something you need to know: if you don't delete your old .U file first, UCC won't attempt to recompile the package. You can do this from the command line like such:
+    </p>
+      
+    <code>
+del DeadlyKick.u
+    </code>
+      
+    <p>  
+Once you've done this, go ahead and ucc make, then run your mutator on TestMap again (hit the up arrow a few times and the postal2 line will reappear, saving you the trouble of typing it all out again).
+    </p>
+    
+    <p>
+You'll notice that people or bodies you kick now go flying further! Feel free to play with the MomentumHitMag value, but be aware that extremely high values may cause the ragdoll system to fail, turning the pawn into a pile of meaty gibs, or even worse -- cause a crash to desktop.
+    </p>
+    
+    <p>
+You may have noticed that when NPCs kick you or other people, they don't get the damage boost. This is because the NPC kick damage is defined in the pawn itself, and not as a weapon like with the Dude. Additionally, the NPC kick damage is defined as a constant and not a variable, so changing it isn't as straightforward, and won't be covered here.
+    </p>
+    
+    <p>
+Next let's try changing the DamageType. Different damage types have different effects. We're going to give it the 'Gibbed' damagetype, which (as you may guess) gibs anything it kills:
+    </p>
+    
+    <code>
+function bool CheckReplacement(Actor Other, out byte bSuperRelevant) <br>
+{<br>
+	if (FootAmmoInv(Other) != None)<br>
+	{<br>
+		FootAmmoInv(Other).DamageAmount=9999;<br>
+		FootAmmoInv(Other).MomentumHitMag=240000;<br>
+		FootAmmoInv(Other).DamageTypeInflicted=class'Gibbed';<br>
+	}<br>
+	return true;<br>
+}<br>
+    </code>
+    
+    <p>
+Save, recompile, and run. Now your kick targets turn into meat chunks!
+    </p>
+    
+    <p>
+We're going to make one more change before we're done here. Let's change the Gibbed damage type to the same damage type used by the scythe and see what happens:
+    </p>
+    
+    <code>
+function bool CheckReplacement(Actor Other, out byte bSuperRelevant)<br>
+{<br>
+	if (FootAmmoInv(Other) != None)<br>
+	{<br>
+		FootAmmoInv(Other).DamageAmount=9999;<br>
+		FootAmmoInv(Other).MomentumHitMag=240000;<br>
+		FootAmmoInv(Other).DamageTypeInflicted=class'ScytheDamage';<br>
+	}<br>
+	return true;<br>
+}<br>
+    </code>
+    
+    <p>
+As expected, your foot has now become a slicing weapon of death! You can also use class'MacheteDamage', and instead of slicing bodies in half, it will only slice off limbs and heads.
+    </p>
+    
+    <p>
+Either way, we're done here. Let's find out how to make this a Workshop mod.
+Creating an INT file and testing with the in-game Workshop Browser
+Okay, so, as explained earlier, your mod is invisible to the game unless it has a properly-crafted INT file. Let's set one up now. Go into the POSTAL2Editor\System folder, and create a file called DeadlyKick.int:
+    </p>
+    
+    <code>
+[Public]<br>
+Object=(Name=DeadlyKick.DeadlyKick,Class=Class,MetaClass=Postal2Game.P2GameMod)
+    </code>
+    
+    <p>
+Short and simple. This tells the game that we have a P2GameMod called DeadlyKick.DeadlyKick. You'll note this is the same line we put for Mutator=, so if you named your package or class name different, you'd use that instead.
+    </p>
+    
+    <p>
+Anyway, save that file, and then launch Postal2.exe normally (either by the command line with no arguments, or double-click in Explorer) Go to New Game, Workshop, and then click on the Mods tab.
+    </p>
+    
+    <p>
+You'll see your mod... actually, no you won't. Turns out I've been following along here and neglected to mention something important! What you actually see is "Sample Workshop Mod" -- we forgot to rename our mod. Quit out of that and open up DeadlyKick.uc again, and go down to the bottom. We need to change a few of our mod's Default Properties.
+    </p>
+
+    <code>
+///////////////////////////////////////////////////////////////////////////////<br>
+// Default properties required by all P2GameMods.<br>
+///////////////////////////////////////////////////////////////////////////////<br>
+defaultproperties<br>
+{<br>
+	// GroupName - any Game Mods with the same GroupName will be considered incompatible, and only one will be allowed to run.<br>
+	// Use this if you make mods that are not designed to run alongside each other.<br>
+	GroupName=""<br>
+	// FriendlyName - the name of your Game Mod, displayed in the game mod menu.<br>
+	FriendlyName="Sample Workshop Mod"<br>
+	// Description - optional short description of your Game Mod<br>
+	Description="An example of how to do various things with P2GameMod."<br>
+}
+    </code>
+    
+    <p>
+Change the FriendlyName to "Deadly Kick", and write something appropriate for the Description:
+    </p>
+    
+    <code>
+///////////////////////////////////////////////////////////////////////////////<br>
+// Default properties required by all P2GameMods.<br>
+///////////////////////////////////////////////////////////////////////////////<br>
+defaultproperties<br>
+{<br>
+	// GroupName - any Game Mods with the same GroupName will be considered incompatible, and only one will be allowed to run.<br>
+	// Use this if you make mods that are not designed to run alongside each other.<br>
+	GroupName=""<br>
+	// FriendlyName - the name of your Game Mod, displayed in the game mod menu.<br>
+	FriendlyName="Deadly Kick"<br>
+	// Description - optional short description of your Game Mod<br>
+	Description="Grants the player a deadly foot."<br>
+}<br>
+    </code>
+
+    <p>
+Save, recompile, and reload POSTAL 2. New Game --> Workshop --> Mods, you should now see Deadly Kick in there. Double-click on it to add it to the active mods list, then hit Start. If you've done everything correctly, your in-game boot should now be slicing and dicing bystanders (or doing whatever else you might have modded it to do)
+    </p>
+    
+  </section>
+
+  <section id="Credits" class="main-section">
+    <header>
+      Credits
+    </header>
+    
+    <p>
+      ALL OF THIS DOCUMENTATION IS TAKEN FROM POSTAL2 WORKSHOP GUIDES BY ENKAY FROM THE POSTAL2 COMMUNITY PAGE.
+    </p>
+    
+    <p>
+Getting started with POSTed:<br>
+https://steamcommunity.com/sharedfiles/filedetails/?id=254329484
+    </p>
+    
+    <p>
+My First Mod: <br>
+https://steamcommunity.com/sharedfiles/filedetails/?id=258626248
+    </p>
+  </section>
+
+</main>

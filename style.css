@@ -1,0 +1,102 @@
+a:link
+{
+  text-decoration: none;
+  font-weight: bold;
+  color: #333333;
+}
+
+a:visited
+{
+  color: #333333;
+}
+
+header
+{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+body
+{
+  background-color: grey;
+  font-family: 'Helvetica';
+  margin: 0;
+}
+
+hr
+{
+  border: 1px solid black;
+  margin: 10px -10px;
+  opacity: .6;
+}
+
+code
+{
+  background-color: #CCCCCC;
+}
+
+#main-doc
+{
+  background-color: #F5F5F5;
+  margin-left: 21em; 
+  padding: 1em;
+  text-align: left;
+}
+
+.main-section
+{
+  
+}
+
+#navbar
+{
+  display: flex;
+  flex-direction: column;
+  background-color: #B6B8CD;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  bottom:0%;
+  padding: 10px;
+  text-align: center;
+  border-right: 2px solid rgba(0, 0, 0, .5);
+}
+
+.nav-link
+{
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  font-size: 18px;
+}
+
+@media(max-width: 700px)
+{
+  #navbar
+  {
+    position: static; /* I'd prefer it was fixed for easier navigation with spans*/
+    left: 0%;         /* But in order to solve the problem it has to be done this way.*/
+    right: 0%;
+    height: 200px;
+    border-right: 0px;
+    border-bottom: 2px solid rgba(0, 0, 0, .5);
+    overflow-y: scroll;
+  }
+  
+  #main-doc
+  {
+    background-color: #F5F5F5;
+    --margin-top: 13em; 
+    margin-left: 0;
+    padding: 1em;
+    text-align: left;
+  }
+  
+  .anchor
+  {
+    display: block;
+    height: 220px;
+    margin-top: -220px;
+    visibility: hidden;
+  }
+}
